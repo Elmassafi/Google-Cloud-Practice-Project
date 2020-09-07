@@ -1,4 +1,4 @@
-# Google Cloud Fundamentals:  Getting Started with Cloud Storage and Cloud SQL
+# Google Cloud Fundamentals: Getting Started with Cloud Storage and Cloud SQL
 
 - In this lab, We learn how to perform the following tasks:
   - Deploy a web server VM instance
@@ -72,7 +72,7 @@ We can list the sql instances and filter based on the name
 gcloud sql instances list --filter=name=blog-db
 ```
 
-**\*NB**: Public IP address is PRIMARY_ADDRESS, Save for later use\*
+_**NB**: Public IP address is PRIMARY_ADDRESS, Save for later use_
 
 2. Creating a user blogdbuser
 
@@ -80,7 +80,22 @@ gcloud sql instances list --filter=name=blog-db
 gcloud sql users create blogdbuser  --instance=blog-db --password=password
 ```
 
-3. Connections
+3. Connections: we will configure new authorized network
+
+```
+gcloud sql instances patch blog-db  --authorized-networks bloghost_VM_EXTERNAL_IP
+
+```
+
+The result will look like this:
+
+```
+gcloud sql instances patch blog-db  --authorized-networks 34.123.90.248/32
+```
+
+_**NB**:When adding a new IP address to authorized networks, make sure to also
+include any IP addresses that have already been authorized.
+Otherwise, they will be overwritten and de-authorized._
 
 ## Configure an application in a Compute Engine instance to use Cloud SQL
 
@@ -114,7 +129,7 @@ sudo nano index.php
     <?php
  $dbserver = "CLOUDSQLIP";
 $dbuser = "blogdbuser";
-$dbpassword = "password";
+$dbpassword = "DBPASSWORD";
 // In a production blog, we would not store the MySQL
 // password in the document root. Instead, we would store it in a
 // configuration file elsewhere on the web server VM instance.
@@ -163,7 +178,7 @@ The resulting will look like this:
     <?php
  $dbserver = "34.67.202.5";
 $dbuser = "blogdbuser";
-$dbpassword = "DBPASSWORD";
+$dbpassword = "password";
 // In a production blog, we would not store the MySQL
 // password in the document root. Instead, we would store it in a
 // configuration file elsewhere on the web server VM instance.
@@ -211,7 +226,7 @@ cd /var/www/html
 sudo nano index.php
 ```
 
-**\*NB**: We repalce the Public_link with Public link of object called my-excellent-blog.png In the bucket created early in this lab\*
+_**NB**: We repalce the Public_link with Public link of object called my-excellent-blog.png In the bucket created early in this lab_
 
 ```html
 <html>
@@ -224,7 +239,7 @@ sudo nano index.php
     <?php
  $dbserver = "34.67.202.5";
 $dbuser = "blogdbuser";
-$dbpassword = "DBPASSWORD";
+$dbpassword = "password";
 // In a production blog, we would not store the MySQL
 // password in the document root. Instead, we would store it in a
 // configuration file elsewhere on the web server VM instance.
@@ -240,3 +255,7 @@ if (mysqli_connect_error()) {
   </body>
 </html>
 ```
+  - result
+
+   ![my excellent blog](./images/welcome-to-my-excellent-blog.png)
+
