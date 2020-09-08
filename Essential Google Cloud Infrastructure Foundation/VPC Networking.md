@@ -111,44 +111,66 @@ _**Record the IP address range for the subnets in us-central1 and europe-west1. 
 gcloud compute networks subnets list --network=mynetwork --filter="region:( us-central1, europe-west1)"
 ```
 
+```
 NAME REGION NETWORK RANGE
 mynetwork us-central1 mynetwork 10.128.0.0/20
 mynetwork europe-west1 mynetwork 10.132.0.0/20
+```
 
 ## Create a VM instance in us-central1
 
+```
 gcloud compute instances create mynet-us-vm --zone=us-central1-c --machine-type=n1-standard-1 --subnet=mynetwork
+```
 
+```
 gcloud compute instances list --filter=name=mynet-us-vm
+```
 
+```
 NAME ZONE MACHINE_TYPE PREEMPTIBLE INTERNAL_IP EXTERNAL_IP STATUS
 mynet-us-vm us-central1-c n1-standard-1 10.128.0.2 35.225.251.200 RUNNING
+```
 
+```
 gcloud compute instances create mynet-eu-vm --zone=europe-west1-c --machine-type=n1-standard-1 --subnet=mynetwork
+```
 
+```
 gcloud compute instances list --filter=name=mynet-eu-vm
+```
 
+```
 NAME ZONE MACHINE_TYPE PREEMPTIBLE INTERNAL_IP EXTERNAL_IP STATUS
 mynet-eu-vm europe-west1-c n1-standard-1 10.132.0.2 34.77.113.224 RUNNING
+```
 
+```
 gcloud compute ssh mynet-us-vm --zone=us-central1-c
+```
 
 ## Convert the network to a custom mode network
 
 Network [mynetwork] will be switched to custom mode. This operation
 cannot be undone.
 
+```
 gcloud compute networks update mynetwork --switch-to-custom-subnet-mode
+```
 
 ## Create the managementnet network
 
 To create the managementnet network, run the following command:
 
+```
 gcloud compute networks create managementnet --subnet-mode=custom --bgp-routing-mode=regional
+```
 
 To create the managementsubnet-us subnet, run the following command:
 
+```
 gcloud compute networks subnets create managementsubnet-us --range=10.130.0.0/20 --network=managementnet --region=us-central1
+```
 
 ## Create the privatenet network
 
