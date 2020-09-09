@@ -249,15 +249,15 @@ gcloud compute instances create privatenet-us-vm --zone=us-central1-c --machine-
 To list all the VM instances (sorted by zone), run the following command:
 
 ```
-gcloud compute instances list --sort-by=ZONE --format='table(name,ZONE,INTERNAL_IP,EXTERNAL_IP,status,networkInterfaces[0].network)'
+gcloud compute instances list --sort-by=ZONE --format='table(name,ZONE,INTERNAL_IP,EXTERNAL_IP,status,networkInterfaces[].network.notnull().list().segment(9):label=NETWORK)'
 ```
 
-| NAME                | ZONE           | INTERNAL_IP | EXTERNAL_IP    | STATUS  | NETWORK                                                                                                   |
-| ------------------- | -------------- | ----------- | -------------- | ------- | --------------------------------------------------------------------------------------------------------- |
-| mynet-eu-vm         | europe-west1-c | 10.132.0.2  | 34.77.113.224  | RUNNING | https://www.googleapis.com/compute/v1/projects/qwiklabs-gcp-00-3ecff73327a0/global/networks/mynetwork     |
-| managementnet-us-vm | us-central1-c  | 10.130.0.2  | 35.232.215.137 | RUNNING | https://www.googleapis.com/compute/v1/projects/qwiklabs-gcp-00-3ecff73327a0/global/networks/managementnet |
-| mynet-us-vm         | us-central1-c  | 10.128.0.2  | 35.225.251.200 | RUNNING | https://www.googleapis.com/compute/v1/projects/qwiklabs-gcp-00-3ecff73327a0/global/networks/mynetwork     |
-| privatenet-us-vm    | us-central1-c  | 172.16.0.2  | 34.122.137.163 | RUNNING | https://www.googleapis.com/compute/v1/projects/qwiklabs-gcp-00-3ecff73327a0/global/networks/privatenet    |
+| NAME                | ZONE           | INTERNAL_IP | EXTERNAL_IP    | STATUS  | NETWORK       |
+| ------------------- | -------------- | ----------- | -------------- | ------- | ------------- |
+| mynet-eu-vm         | europe-west1-c | 10.132.0.2  | 34.77.113.224  | RUNNING | mynetwork     |
+| managementnet-us-vm | us-central1-c  | 10.130.0.2  | 35.232.215.137 | RUNNING | managementnet |
+| mynet-us-vm         | us-central1-c  | 10.128.0.2  | 35.225.251.200 | RUNNING | mynetwork     |
+| privatenet-us-vm    | us-central1-c  | 172.16.0.2  | 34.122.137.163 | RUNNING | privatenet    |
 
 ## Explore the connectivity across networks
 
