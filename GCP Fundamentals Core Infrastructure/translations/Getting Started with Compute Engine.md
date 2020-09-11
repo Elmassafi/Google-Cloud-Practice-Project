@@ -92,7 +92,7 @@ Hi from EL MASSAFI
 curl http://localhost/
 ```
 
-**\*NB**: The response will be the HTML source of the web server's home page, including line Hi from EL MASSAFI.\*
+_**NB**: The response will be the HTML source of the web server's home page, including line Hi from EL MASSAFI._
 
 9.  we exit from my-vm-1 and let's confirm that **my-vm-2** can reach the web server on **my-vm-1**
 
@@ -100,7 +100,7 @@ curl http://localhost/
 curl http://my-vm-1/
 ```
 
-**\*NB**: The response will be the HTML source of the web server's home page, including line Hi from EL MASSAFI.\*
+_**NB**: The response will be the HTML source of the web server's home page, including line Hi from EL MASSAFI._
 
 10. Copy the External IP address for my-vm-1 and paste it into the address bar of a new browser tab. We will see the web server's home page, including custom text.
 
